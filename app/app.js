@@ -6,9 +6,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressNunjucks = require('express-nunjucks');
+const methodOverride = require('method-override');
 
 // rotas importadas
-var index = require('./routes/index');
+//var index = require('./routes/index');
+const index = require('./routes/musicas');
 var users = require('./routes/users');
 var tabuada = require('./routes/tabuada');
 
@@ -27,6 +29,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(merhodOverride((req, res) => {
+    if (req.body && typeof req.body === 'object' && '_method' in req.body) {
+        let method = req.body._method;
+	delete req.body._method;
+	return method;
+    }
+}));
 
 //caminho das rotas
 app.use('/', index);
