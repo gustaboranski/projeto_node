@@ -2,32 +2,38 @@
 
 {% block pagina %}
     <h1>Músicas	da	minha	Playlist</h1>
-		<table	class="table table-responsive table-striped">
+        <div class="table-responsive table-responsive-xl">
+		    <table	class="table table-striped">
 				<thead>
 						<tr>
-								<th>Id</th>
-								<th>Nome</th>
-								<th>Artista</th>
-								<th>Estrelas</th>
-								<th>Ações</th>
+								<th class="text-center">Id</th>
+								<th class="text-center">Nome</th>
+								<th class="text-center">Artista</th>
+								<th class="text-center">Estrelas</th>
+								<th class="text-center">Ações</th>
 						</tr>
 				</thead>
 				<tbody>
-						<tr>
-														<td>1</td>
-								<td>Californication</td>
-								<td>Red	Hot	Chili	Peppers</td>
-								<td>
-										<span	class="glyphicon	glyphicon-star"></span>
-										<span	class="glyphicon	glyphicon-star"></span>
-										<span	class="glyphicon	glyphicon-star"></span>
-								</td>
-								<td>
-										<a	href="#" class="btn	btn-primary">Editar</a>
-										<a	href="#" class="btn	btn-danger">Excluir</a>
-								</td>
-						</tr>
+
+                                                {% for m in musicas %}
+                                                    <tr>
+                                                        <td valign="middle" class="align-middle">{{m.id}}</td>
+                                                        <td valign="middle" class="align-middle">{{m.nome}}</td>
+                                                        <td vertical-align="middle" class="align-middle">{{m.artista}}</td>
+                                                        <td class="align-middle">
+                                                            {% for i in range(0, (5 if m.estrelas >= 5 else m.estrelas)) %}
+                                                                <span class="glyphicon glyphicon-star align-middle"></span>
+                                                            {% endfor %}
+                                                            {% for i in range( 0  , 5 - ( m.estrelas if m.estrelas >= 0 else 0 )) %}
+                                                                <span class="glyphicon glyphicon-star-empty align-middle"></span>
+                                                            {% endfor %}
+                                                        </td>
+                                                        <td class="align-middle">                                                             <a href="/edit/{{m.id}}" class="align-middle btn btn-primary inline">Editar</a>                                                                                                                                        <a href="./delete/{{m.id}}" class="align-middle btn btn-danger inline">Excluir</a>
+                                                        </td>
+                                                   </tr>
+                                                 {% endfor %}
 				</tbody>
-		</table>
+		    </table>
+		</div>
 
 {% endblock %}
