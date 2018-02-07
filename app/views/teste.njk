@@ -1,0 +1,45 @@
+{% extends "layout.njk" %}
+
+{% block pagina %}
+<div style="font-size: 40px; margin-top: 20px">
+{% for i in range(1, 1 + (5 if qt  >= 5 else qt) ) %}
+                                                                <span onclick="alert('oi')" class="glyphicon glyphicon-star align-middle" id="{{i}}"></span>
+                                                            {% endfor %}
+
+{% for i in range( (qt + 1 if qt >= 0 else 1)  , 5 + 1 ) %}
+                                                                <span class="glyphicon glyphicon-star-empty id="{{i}}"  align-middle" ></span>
+                                                            {% endfor %}
+
+							    <span class="glyphicon glyphicon-star-empty  align-middle" id="tchau"  onclick="boa(event)"></span>
+
+</div>
+
+<script>        
+alert("script");
+
+document.getElementById("1").onclick = function(event) { 
+    event.target.className = "glyphicon glyphicon-star-empty";
+};
+
+
+function boa(event)
+{
+alert(event.target.id);
+
+console.log(event.target);
+
+}
+
+document.getElementsByClassName("glyphicon").forEach(
+    function(elem){
+        elem.onclick = alert(elem.id);
+    }
+);
+
+
+</script>
+
+
+
+{% endblock %}
+

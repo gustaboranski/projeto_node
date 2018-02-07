@@ -48,4 +48,8 @@ router.delete('/delete:id', (req, res, next) => {
 
 });
 
+router.get('/teste', (req, res, next) => {
+    res.render("teste", {qt : 3} );
+});
+
 module.exports = router;
