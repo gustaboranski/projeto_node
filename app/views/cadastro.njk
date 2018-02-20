@@ -1,0 +1,33 @@
+{% extends "layout.njk" %}
+
+{% block menu %}
+
+{% endblock %}
+
+{% block pagina %}
+
+<h1 class="page-header"> Cadastro de Usuario </h1>
+
+<form method="post" action="/cadastrar" >
+
+<div class="form-group">
+    <label for="usuario"> Digite seu Usuario:</label>
+    <input type="text" class="form-control" placeholder="Usuario" name="usuario" required>
+</div>
+
+<div class="form-group">
+    <label for="senha"> Digite sua Senha:</label>
+    <input type="password" class="form-control" placeholder="Senha" name="senha1" required>
+</div>
+
+<div class="form-group">
+    <label for="usuario"> Repita sua Senha:</label>
+    <input type="password" class="form-control" placeholder="Senha" name="senha2" required>
+</div>
+
+<button type="submit" class="btn btn-primary">Cadastrar</button>
+<a href="/" class="btn btn-default">Voltar</a>
+
+</form>
+
+{% endblock %}

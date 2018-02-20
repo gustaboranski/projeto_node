@@ -9,6 +9,7 @@
 		<link	rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     </head>
     <body>
+{% block menu %}
 <nav	class="navbar	navbar-inverse	navbar-fixed-top">
 				<div	class="container">
 						<div	class="navbar-header">
@@ -24,10 +25,11 @@
 								<ul	class="nav	navbar-nav">
 										<li	class="active"><a	href="/">Início</a></li>
 										<li><a	href="/add">Inserir	Músicas</a></li>
-								</ul>
+		    <li><a href="/logout">Sair</a></li>						</ul>
 						</div>
 				</div>
 		</nav>
+{% endblock %}
 	    <div	class="container">
 			<div	class="row" style="margin-top:	50px;">
 			    <div	class="col-md-12">

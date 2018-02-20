@@ -28,9 +28,12 @@
                                                                 <span class="glyphicon glyphicon-star-empty align-middle"></span>
                                                             {% endfor %}
                                                         </td>
-                                                        <td class="align-middle">                                                             <a href="/edit/{{m.id}}" class="align-middle btn btn-primary inline">Editar</a>                                                                                                                                        <a href="./delete/{{m.id}}" class="align-middle btn btn-danger inline">Excluir</a>
-                                                        </td>
-                                                   </tr>
+                                                        <td class="align-middle">                                                             <a href="/edit/{{m.id}}" class="align-middle btn btn-primary inline">Editar</a>                                                                                                                                        <a href="./delete/{{m.id}}" onclick="event.preventDefault(); document.getElementById('logout-form-{{m.id}}').submit();" class="align-middle btn btn-danger inline">Excluir</a>   
+						       </td>
+                                                       <form action="/delete/{{m.id}}" id="logout-form-{{m.id}}" method="POST" style="display:none;">
+						       <input type="hidden" name="_method" value="DELETE" />
+						       </form>
+						   </tr>
                                                  {% endfor %}
 				</tbody>
 		    </table>

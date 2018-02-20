@@ -7,12 +7,16 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var expressNunjucks = require('express-nunjucks');
 const methodOverride = require('method-override');
+const session = require('express-session');
+const passport = require('passport');
+require('./passport');
 
 // rotas importadas
 //var index = require('./routes/index');
 const index = require('./routes/musicas');
 var users = require('./routes/users');
 var tabuada = require('./routes/tabuada');
+const login = require('./routes/login');
 
 var app = express();
 
@@ -20,7 +24,7 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'njk');
 
-var njk = expressNunjucks(app);
+var njk = expressNunjucks(app, { watch : true });
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -37,11 +41,20 @@ app.use(methodOverride((req, res) => {
 	return method;
     }
 }));
+app.use(session({
+    secret : 'teste sessoes', 
+    resave : false, 
+    saveUninitialized : false 
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 //caminho das rotas
 app.use('/', index);
 app.use('/users', users);
 app.use('/tabuada', tabuada);
+app.use('/', login);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

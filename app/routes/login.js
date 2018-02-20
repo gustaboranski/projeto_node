@@ -1,0 +1,74 @@
+const express = require('express');
+
+const router = express.Router();
+
+const bcrypt = require('bcryptjs');
+
+const db = require('../db');
+
+const passport = require('passport');
+
+const isAuth = require("../middlewares/authorize.js").isAuth;
+
+const isNotAuth = require("../middlewares/authorize.js").isNotAuth;
+
+
+router.get('/login', isNotAuth , (req, res, next) => {
+        res.render('login');
+});
+
+router.post('/login',isNotAuth ,passport.authenticate('local',{
+    successRedirect: '/',
+    failureRedirect: '/login',
+}));
+
+router.get('/logout', (req, res, next)=>{
+    req.session.destroy();
+    res.redirect('/');
+});
+
+router.get('/cadastrar', isNotAuth,(req, res, next)=>{
+    res.render('cadastro');
+});
+
+/*
+router.post('/cadastrar', (req,res,next)=>{
+    let input = req.body;                                                                     db("login").where("usuario", input.usuario).first()
+	.then((db_user)=>{
+            if( (db_user != undefined) || (input.senha1 != input.senha2) ){
+	        return false;
+	    }else{                                                                                        delete input.senha2;
+		input.senha  = bcrypt.hashSync(input.senha1,10);
+		delete input.senha1;
+		input.nivel = 0;
+		return input;
+	    } 	
+	})
+	.then((dados)=>{
+	    if(!dados){
+                return res.redirect('/cadastrar');
+	    }else{
+                db('login').insert(dados).then((ids)=>{
+		    console.log("login criado com sucesso");
+		    return res.redirect('/');
+		},next);
+	    }
+	
+	});
+});
+*/
+
+
+
+router.post('/cadastrar',isNotAuth , (req,res,next)=>{                                             let input = req.body;                                                                     db("login").where("usuario", input.usuario).first()
+        .then((db_user)=>{                                                                            if( (db_user != undefined) || (input.senha1 != input.senha2) ){                               return res.redirect('/cadastrar');                                                    }else{                                                                                        delete input.senha2;                                                                      input.senha  = bcrypt.hashSync(input.senha1,10);
+                delete input.senha1;                                                                      input.nivel = 0;                                                                          db("login").insert(input).then((ids)=>{
+		    console.log("login criado com sucesso");
+		    console.log("ids", ids);
+		    return res.redirect('/');
+		});
+            }
+	});
+});
+
+module.exports = router;
